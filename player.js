@@ -112,16 +112,16 @@ $(document).ready(function() {
     }
 
     $('.queue-item').click(function() {
-    const trackNumber = parseInt($(this).find('.queue-number').text());
-    const index = trackNumber - 1;
-    
-    currentTrack = index;
-    loadTrack(index);
-    
-    if (!isPlaying) {
-        $('#playBtn').click();
-    }
-});
+        const trackNumber = parseInt($(this).find('.queue-number').text());
+        const index = trackNumber - 1;
+        
+        currentTrack = index;
+        loadTrack(index);
+        
+        if (!isPlaying) {
+            $('#playBtn').click();
+        }
+    });
 
 
     $('.control-btn').hover(
