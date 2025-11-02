@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicFlow - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-music"></i> MusicFlow
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="player.html">Player</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="playlists.html">Playlists</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1>Welcome to MusicFlow</h1>
+            <p>Your ultimate music streaming experience</p>
+            <a href="player.html" class="btn btn-primary btn-lg">
+                <i class="fas fa-play"></i> Start Listening
+            </a>
+        </div>
+    </section>
+
+    <div class="container my-5">
+        <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="carousel-overlay">
+                        <h2>New Releases</h2>
+                        <p>Discover the latest hits</p>
+                    </div>
+                </div>
+                <div class="carousel-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <div class="carousel-overlay">
+                        <h2>Top Charts</h2>
+                        <p>Most popular tracks this week</p>
+                    </div>
+                </div>
+                <div class="carousel-item" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <div class="carousel-overlay">
+                        <h2>Curated Playlists</h2>
+                        <p>Handpicked for you</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">Featured Playlists</h2>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="playlist-card">
+                    <div class="playlist-img">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h5>Hot Hits</h5>
+                    <p>The hottest tracks right now</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="playlist-card">
+                    <div class="playlist-img" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h5>Love Songs</h5>
+                    <p>Romantic melodies for you</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="playlist-card">
+                    <div class="playlist-img" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <h5>Workout Mix</h5>
+                    <p>Energize your workout</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="playlist-card">
+                    <div class="playlist-img" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <h5>Chill Vibes</h5>
+                    <p>Relax and unwind</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>MusicFlow</h5>
+                    <p class="text-muted">Your ultimate music streaming platform. Listen to millions of songs anytime, anywhere.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="player.html">Player</a></li>
+                        <li><a href="playlists.html">Playlists</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Follow Us</h5>
+                    <div class="social-icons">
+<a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook"> <i class="fab fa-facebook"></i> </a>
+<a href="https://x.com" target="_blank" rel="noopener noreferrer" title="X"> <i class="fab fa-twitter"></i> </a>
+<a href="https://instagram.com" target="_blank" rel="noopener noreferrer" title="Instagram"> <i class="fab fa-instagram"></i> </a> 
+<a href="https://Youtube.com" target="_blank" rel="noopener noreferrer" title="Youtube"> <i class="fab fa-youtube"></i> </a>
+                    </div>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.1);">
+            <div class="text-center text-muted">
+                <p>&copy; 2024 MusicFlow. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
