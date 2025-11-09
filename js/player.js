@@ -1,3 +1,4 @@
+// moved to js/player.js
 $(document).ready(function() {
     let isPlaying = false;
     let currentTime = 0;
@@ -9,10 +10,10 @@ $(document).ready(function() {
 
     // This is the "database" of all tracks
     const defaultTracks = [
-        { id: 1, name: 'Want to', author: 'Playboi Carti', url: '/songs/wantto.m4a', duration: '2:31', cover: 'song_covers/prevail.jpg' },
-        { id: 2, name: 'Asthma/Goku', author: 'Playboi Carti', url: '/songs/asthma.m4a', duration: '2:10', cover: 'song_covers/prevail.jpg' },
-        { id: 3, name: 'Movie Time', author: 'Playboi Carti', url: '/songs/movietime.m4a', duration: '2:41', cover: 'song_covers/prevail.jpg' },
-        { id: 4, name: 'Friends', author: 'Playboi Carti', url: '/songs/friends.m4a', duration: '2:45', cover: 'song_covers/prevail.jpg' }
+        { id: 1, name: 'Want to', author: 'Playboi Carti', url: '../songs/wantto.m4a', duration: '2:31', cover: 'song_covers/prevail.jpg' },
+        { id: 2, name: 'Asthma/Goku', author: 'Playboi Carti', url: '../songs/asthma.m4a', duration: '2:10', cover: 'song_covers/prevail.jpg' },
+        { id: 3, name: 'Movie Time', author: 'Playboi Carti', url: '../songs/movietime.m4a', duration: '2:41', cover: 'song_covers/prevail.jpg' },
+        { id: 4, name: 'Friends', author: 'Playboi Carti', url: '../songs/friends.m4a', duration: '2:45', cover: 'song_covers/prevail.jpg' }
     ];
 
     // Load queue from localStorage (array of ids) or use all tracks

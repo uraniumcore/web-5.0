@@ -1,3 +1,4 @@
+// moved to js/contact.js
 $(document).ready(function() {
     $('#contactForm').on('submit', function(e) {
         e.preventDefault();

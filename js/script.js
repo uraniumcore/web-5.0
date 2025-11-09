@@ -1,3 +1,4 @@
+// moved to js/script.js
 // --- Authentication Simulation ---
 $(function() {
     // Sign Up
