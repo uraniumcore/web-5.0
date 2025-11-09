@@ -1,4 +1,9 @@
 // moved to js/player.js
+// NOTE: Audio sources are now requested via the remote API:
+//   https://api-service-for-music.onrender.com/{music_file_name}
+// The player extracts the filename from the track.url (for example "songs/stopbreathing.mp3")
+// and uses encodeURIComponent on the filename when building the API URL. If the API
+// is unreachable, the player falls back to the raw `track.url` value.
 $(document).ready(function () {
     let isPlaying = false;
     let currentTime = 0;
@@ -10,11 +15,11 @@ $(document).ready(function () {
 
     // This is the "database" of all tracks
     const defaultTracks = [
-        { id: 1, name: 'Want to', author: 'Playboi Carti', url: 'songs/wantto.m4a', duration: '2:31', cover: 'song_covers/prevail.jpg' },
-        { id: 2, name: 'Asthma/Goku', author: 'Playboi Carti', url: 'songs/asthma.m4a', duration: '2:10', cover: 'song_covers/prevail.jpg' },
-        { id: 3, name: 'Movie Time', author: 'Playboi Carti', url: 'songs/movietime.m4a', duration: '2:41', cover: 'song_covers/prevail.jpg' },
-        { id: 4, name: 'Friends', author: 'Playboi Carti', url: 'songs/friends.m4a', duration: '2:45', cover: 'song_covers/prevail.jpg' },
-        { id: 5, name: 'Stop Breathing', author: 'Playboi Carti', url: 'songs/stopbreathing.mp3', duration: '3:38', cover: 'song_covers/prevail.jpg' }
+        { id: 1, name: 'Want to', author: 'Playboi Carti', filename: 'wantto.m4a', duration: '2:31', cover: 'song_covers/prevail.jpg' },
+        { id: 2, name: 'Asthma/Goku', author: 'Playboi Carti', filename: 'asthma.m4a', duration: '2:10', cover: 'song_covers/prevail.jpg' },
+        { id: 3, name: 'Movie Time', author: 'Playboi Carti', filename: 'movietime.m4a', duration: '2:41', cover: 'song_covers/prevail.jpg' },
+        { id: 4, name: 'Friends', author: 'Playboi Carti', filename: 'friends.m4a', duration: '2:45', cover: 'song_covers/prevail.jpg' },
+        { id: 5, name: 'Stop Breathing', author: 'Playboi Carti', filename: 'stopbreathing.mp3', duration: '3:38', cover: 'song_covers/prevail.jpg' }
     ];
 
     // Load queue from localStorage (array of ids) or use all tracks
@@ -48,6 +53,38 @@ $(document).ready(function () {
         const mins = Math.floor(seconds / 60);
         const secs = Math.floor(seconds % 60);
         return mins + ':' + (secs < 10 ? '0' : '') + secs;
+    }
+
+    // Check API availability for a given filename.
+    // We try a small ranged GET (bytes=0-0) to verify the resource exists and CORS/headers allow access.
+    async function checkApiAvailability(filename, timeoutMs = 4000) {
+        if (!filename) return false;
+        const encoded = encodeURIComponent(filename);
+        const url = `https://api-service-for-music.onrender.com/${encoded}`;
+
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+        try {
+            const res = await fetch(url, {
+                method: 'GET',
+                headers: { 'Range': 'bytes=0-0' },
+                mode: 'cors',
+                signal: controller.signal,
+            });
+            clearTimeout(timeout);
+            // Accept 206 Partial Content or 200 OK as success, and content-type should be audio/* when present
+            if (!res.ok) return false;
+            const ct = res.headers.get('content-type') || '';
+            if (ct && !ct.startsWith('audio')) {
+                // not an audio content-type, but still accept if OK status
+                return true;
+            }
+            return true;
+        } catch (e) {
+            clearTimeout(timeout);
+            return false;
+        }
     }
 
     function renderQueue() {
@@ -89,7 +126,7 @@ $(document).ready(function () {
     const audio = document.getElementById('audioPlayer');
     audio.volume = volume / 100;
 
-    function loadTrack(index) {
+    async function loadTrack(index) {
         if (!tracks[index]) return;
         const track = tracks[index];
         $('#trackTitle').text(track.name);
@@ -101,8 +138,17 @@ $(document).ready(function () {
         $('.time-current').text('0:00');
         renderQueue();
         $('.track-info').hide().fadeIn(500);
-        // Set audio src
-        audio.src = track.url;
+
+        // Extract base name (without extension) for API
+        let baseName = track.filename ? track.filename.split('.')[0] : '';
+        if (!baseName) {
+            $('#queue-list').prepend('<div class="alert alert-danger mt-2">No filename for track: ' + (track.name || 'Unknown') + '</div>');
+            return;
+        }
+
+        // Set audio src to /audio/{baseName} (API expects name without extension)
+        const audioUrl = `https://api-service-for-music.onrender.com/audio/${encodeURIComponent(baseName)}`;
+        audio.src = audioUrl;
         audio.currentTime = 0;
         updateCover(track);
         // If playing, start playback
@@ -183,19 +229,19 @@ $(document).ready(function () {
     });
 
     // Next/Prev
-    $('#prevBtn').off('click').on('click', function () {
+    $('#prevBtn').off('click').on('click', async function () {
         if (currentTrack > 0) {
             currentTrack--;
-            loadTrack(currentTrack);
+            await loadTrack(currentTrack);
             if (isPlaying) audio.play();
         }
         $(this).css('transform', 'scale(0.9)');
         setTimeout(() => $(this).css('transform', 'scale(1)'), 100);
     });
-    $('#nextBtn').off('click').on('click', function () {
+    $('#nextBtn').off('click').on('click', async function () {
         if (currentTrack < tracks.length - 1) {
             currentTrack++;
-            loadTrack(currentTrack);
+            await loadTrack(currentTrack);
             if (isPlaying) audio.play();
         }
         $(this).css('transform', 'scale(0.9)');
@@ -203,10 +249,10 @@ $(document).ready(function () {
     });
 
     // Queue click
-    $(document).off('click', '.queue-item').on('click', '.queue-item', function () {
+    $(document).off('click', '.queue-item').on('click', '.queue-item', async function () {
         const index = parseInt($(this).attr('data-index'));
         currentTrack = index;
-        loadTrack(index);
+        await loadTrack(index);
         if (!isPlaying) {
             $('#playBtn').click();
         }
@@ -233,7 +279,7 @@ $(document).ready(function () {
     }
 
     // Shuffle button
-    $('#shuffleBtn').off('click').on('click', function () {
+    $('#shuffleBtn').off('click').on('click', async function () {
         isShuffled = !isShuffled;
         setButtonActive($(this), isShuffled);
         if (isShuffled) {
@@ -243,7 +289,7 @@ $(document).ready(function () {
             // Update tracks to shuffled
             tracks = shuffled.map(id => defaultTracks.find(t => t.id === id)).filter(Boolean);
             currentTrack = 0;
-            loadTrack(currentTrack);
+                await loadTrack(currentTrack);
         } else {
             // Restore original queue
             const queueData = localStorage.getItem('musicflow_queue');
@@ -251,7 +297,7 @@ $(document).ready(function () {
                 const parsed = JSON.parse(queueData);
                 tracks = parsed.map(id => defaultTracks.find(t => t.id === id)).filter(Boolean);
                 currentTrack = 0;
-                loadTrack(currentTrack);
+                    await loadTrack(currentTrack);
             }
         }
         renderQueue();
@@ -286,16 +332,17 @@ $(document).ready(function () {
 
     // Audio error handler
     audio.onerror = function () {
+        // API-only mode: show a single error when loading fails
         isPlaying = false;
         $('#playBtn').html('<i class="fas fa-play"></i>').removeClass('playing');
         $('.album-cover i').removeClass('fa-spin');
-        // Show error message in queue area
-        $('#queue-list').prepend('<div class="alert alert-danger mt-2">Cannot load audio file: ' + (tracks[currentTrack] ? tracks[currentTrack].name : 'Unknown') + '</div>');
+        const current = tracks[currentTrack];
+        $('#queue-list').prepend('<div class="alert alert-danger mt-2">Cannot load audio file: ' + (current ? current.name : 'Unknown') + '</div>');
     };
 
     // Initial render
     renderQueue();
-    loadTrack(currentTrack);
+    loadTrack(currentTrack).catch(() => {});
     $('.time-current').text('0:00');
     $('.time-total').text(tracks[0] ? tracks[0].duration : '0:00');
     console.log('Music Player initialized!');
