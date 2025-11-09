@@ -1,5 +1,5 @@
 // moved to js/player.js
-$(document).ready(function() {
+$(document).ready(function () {
     let isPlaying = false;
     let currentTime = 0;
     let duration = 225;
@@ -10,10 +10,11 @@ $(document).ready(function() {
 
     // This is the "database" of all tracks
     const defaultTracks = [
-        { id: 1, name: 'Want to', author: 'Playboi Carti', url: '../songs/wantto.m4a', duration: '2:31', cover: 'song_covers/prevail.jpg' },
-        { id: 2, name: 'Asthma/Goku', author: 'Playboi Carti', url: '../songs/asthma.m4a', duration: '2:10', cover: 'song_covers/prevail.jpg' },
-        { id: 3, name: 'Movie Time', author: 'Playboi Carti', url: '../songs/movietime.m4a', duration: '2:41', cover: 'song_covers/prevail.jpg' },
-        { id: 4, name: 'Friends', author: 'Playboi Carti', url: '../songs/friends.m4a', duration: '2:45', cover: 'song_covers/prevail.jpg' }
+        { id: 1, name: 'Want to', author: 'Playboi Carti', url: 'songs/wantto.m4a', duration: '2:31', cover: 'song_covers/prevail.jpg' },
+        { id: 2, name: 'Asthma/Goku', author: 'Playboi Carti', url: 'songs/asthma.m4a', duration: '2:10', cover: 'song_covers/prevail.jpg' },
+        { id: 3, name: 'Movie Time', author: 'Playboi Carti', url: 'songs/movietime.m4a', duration: '2:41', cover: 'song_covers/prevail.jpg' },
+        { id: 4, name: 'Friends', author: 'Playboi Carti', url: 'songs/friends.m4a', duration: '2:45', cover: 'song_covers/prevail.jpg' },
+        { id: 5, name: 'Stop Breathing', author: 'Playboi Carti', url: 'songs/stopbreathing.mp3', duration: '3:38', cover: 'song_covers/prevail.jpg' }
     ];
 
     // Load queue from localStorage (array of ids) or use all tracks
@@ -115,7 +116,7 @@ $(document).ready(function() {
     }
 
     // Play/Pause logic
-    $('#playBtn').off('click').on('click', function() {
+    $('#playBtn').off('click').on('click', function () {
         if (!tracks.length) return;
         isPlaying = !isPlaying;
         if (isPlaying) {
@@ -155,7 +156,7 @@ $(document).ready(function() {
     }
 
     // Sync audio time with progress bar
-    audio.ontimeupdate = function() {
+    audio.ontimeupdate = function () {
         currentTime = audio.currentTime;
         const percentage = (currentTime / duration) * 100;
         $('#progressBar').val(percentage);
@@ -163,7 +164,7 @@ $(document).ready(function() {
     };
 
     // Seek
-    $('#progressBar').on('input', function() {
+    $('#progressBar').on('input', function () {
         const percentage = $(this).val();
         currentTime = (percentage / 100) * duration;
         audio.currentTime = currentTime;
@@ -171,7 +172,7 @@ $(document).ready(function() {
     });
 
     // Volume
-    $('#volumeSlider').on('input', function() {
+    $('#volumeSlider').on('input', function () {
         volume = $(this).val();
         audio.volume = volume / 100;
         if (volume == 0) {
@@ -182,7 +183,7 @@ $(document).ready(function() {
     });
 
     // Next/Prev
-    $('#prevBtn').off('click').on('click', function() {
+    $('#prevBtn').off('click').on('click', function () {
         if (currentTrack > 0) {
             currentTrack--;
             loadTrack(currentTrack);
@@ -191,7 +192,7 @@ $(document).ready(function() {
         $(this).css('transform', 'scale(0.9)');
         setTimeout(() => $(this).css('transform', 'scale(1)'), 100);
     });
-    $('#nextBtn').off('click').on('click', function() {
+    $('#nextBtn').off('click').on('click', function () {
         if (currentTrack < tracks.length - 1) {
             currentTrack++;
             loadTrack(currentTrack);
@@ -202,7 +203,7 @@ $(document).ready(function() {
     });
 
     // Queue click
-    $(document).off('click', '.queue-item').on('click', '.queue-item', function() {
+    $(document).off('click', '.queue-item').on('click', '.queue-item', function () {
         const index = parseInt($(this).attr('data-index'));
         currentTrack = index;
         loadTrack(index);
@@ -232,7 +233,7 @@ $(document).ready(function() {
     }
 
     // Shuffle button
-    $('#shuffleBtn').off('click').on('click', function() {
+    $('#shuffleBtn').off('click').on('click', function () {
         isShuffled = !isShuffled;
         setButtonActive($(this), isShuffled);
         if (isShuffled) {
@@ -257,7 +258,7 @@ $(document).ready(function() {
     });
 
     // Repeat button
-    $('#repeatBtn').off('click').on('click', function() {
+    $('#repeatBtn').off('click').on('click', function () {
         isRepeating = !isRepeating;
         setButtonActive($(this), isRepeating);
     });
@@ -267,7 +268,7 @@ $(document).ready(function() {
     setButtonActive($('#repeatBtn'), isRepeating);
 
     // Auto next track
-    audio.onended = function() {
+    audio.onended = function () {
         if (currentTrack < tracks.length - 1) {
             currentTrack++;
             loadTrack(currentTrack);
@@ -284,7 +285,7 @@ $(document).ready(function() {
     };
 
     // Audio error handler
-    audio.onerror = function() {
+    audio.onerror = function () {
         isPlaying = false;
         $('#playBtn').html('<i class="fas fa-play"></i>').removeClass('playing');
         $('.album-cover i').removeClass('fa-spin');
