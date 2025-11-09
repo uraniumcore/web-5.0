@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,41 +21,39 @@
             <div class="col-lg-8">
                 <div class="music-player">
                     <div class="album-art">
-                        <div class="album-cover">
-                            <i class="fas fa-compact-disc fa-spin-slow"></i>
+                        <div class="album-cover" id="albumCover">
+                            <img id="coverImg" src="song_covers/prevail.jpg" alt="Cover" style="width:100%;height:100%;object-fit:cover;" />
+                            <i class="fas fa-compact-disc fa-spin-slow" id="coverIcon" style="display:none;"></i>
                         </div>
                     </div>
-
+                    <audio id="audioPlayer" preload="auto"></audio>
                     <div class="track-info">
                         <h3 id="trackTitle">Summer Vibes</h3>
                         <p id="trackArtist">The Melody Makers</p>
                     </div>
-
                     <div class="progress-container">
                         <span class="time-current">0:00</span>
                         <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100">
-                        <span class="time-total">3:45</span>
+                        <span class="time-total">4:00</span>
                     </div>
-
-                    <div class="player-controls">
-                        <button class="control-btn" id="shuffleBtn">
+                    <div class="player-controls d-flex justify-content-center align-items-center gap-2">
+                        <button class="control-btn" id="shuffleBtn" title="Shuffle">
                             <i class="fas fa-random"></i>
                         </button>
-                        <button class="control-btn" id="prevBtn">
+                        <button class="control-btn" id="prevBtn" title="Previous">
                             <i class="fas fa-step-backward"></i>
                         </button>
-                        <button class="control-btn play-btn" id="playBtn">
+                        <button class="control-btn play-btn" id="playBtn" title="Play/Pause">
                             <i class="fas fa-play"></i>
                         </button>
-                        <button class="control-btn" id="nextBtn">
+                        <button class="control-btn" id="nextBtn" title="Next">
                             <i class="fas fa-step-forward"></i>
                         </button>
-                        <button class="control-btn" id="repeatBtn">
+                        <button class="control-btn" id="repeatBtn" title="Repeat">
                             <i class="fas fa-redo"></i>
                         </button>
                     </div>
-
-                    <div class="volume-control">
+                    <div class="volume-control mt-3 d-flex align-items-center gap-2">
                         <i class="fas fa-volume-down"></i>
                         <input type="range" class="volume-slider" id="volumeSlider" value="70" min="0" max="100">
                         <i class="fas fa-volume-up"></i>
@@ -64,38 +62,7 @@
 
                 <div class="playlist-queue mt-4">
                     <h4>Now Playing Queue</h4>
-                    <div class="queue-item active">
-                        <div class="queue-number">1</div>
-                        <div class="queue-info">
-                            <div class="queue-title">Summer Vibes</div>
-                            <div class="queue-artist">The Melody Makers</div>
-                        </div>
-                        <div class="queue-duration">3:45</div>
-                    </div>
-                    <div class="queue-item">
-                        <div class="queue-number">2</div>
-                        <div class="queue-info">
-                            <div class="queue-title">Night Drive</div>
-                            <div class="queue-artist">Echo Valley</div>
-                        </div>
-                        <div class="queue-duration">4:12</div>
-                    </div>
-                    <div class="queue-item">
-                        <div class="queue-number">3</div>
-                        <div class="queue-info">
-                            <div class="queue-title">Morning Coffee</div>
-                            <div class="queue-artist">Jazz Collective</div>
-                        </div>
-                        <div class="queue-duration">3:28</div>
-                    </div>
-                    <div class="queue-item">
-                        <div class="queue-number">4</div>
-                        <div class="queue-info">
-                            <div class="queue-title">Sunset Boulevard</div>
-                            <div class="queue-artist">Wave Riders</div>
-                        </div>
-                        <div class="queue-duration">3:56</div>
-                    </div>
+                    <div id="queue-list"></div>
                 </div>
             </div>
         </div>

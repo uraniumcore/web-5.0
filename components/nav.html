@@ -12,7 +12,7 @@
                     <a class="nav-link" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="player.html">Player</a>
+                    <a class="nav-link" href="player.html">Player</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="playlists.html">Playlists</a>
@@ -23,7 +23,45 @@
                 <li class="nav-item">
                     <a class="nav-link" href="contact.html">Contact</a>
                 </li>
+                <li class="nav-item" id="auth-nav-item">
+                    <a class="nav-link" href="login.html" id="auth-nav-link">Login</a>
+                </li>
             </ul>
+            <button id="theme-toggle" class="btn btn-outline-light ms-3" title="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+                    <script>
+                    // Navbar auth link logic
+                    function updateAuthNav() {
+                        const user = JSON.parse(localStorage.getItem('musicflow_current_user'));
+                        const navLink = document.getElementById('auth-nav-link');
+                        if (navLink) {
+                            if (user && user.name) {
+                                navLink.textContent = user.name;
+                                navLink.setAttribute('href', '#');
+                                navLink.classList.add('fw-bold');
+                                navLink.onclick = function(e) {
+                                    e.preventDefault();
+                                    localStorage.removeItem('musicflow_current_user');
+                                    updateAuthNav();
+                                    location.reload();
+                                };
+                            } else {
+                                navLink.textContent = 'Login';
+                                navLink.setAttribute('href', 'login.html');
+                                navLink.classList.remove('fw-bold');
+                                navLink.onclick = null;
+                            }
+                        }
+                    }
+                    // Run after nav is loaded
+                    document.addEventListener('DOMContentLoaded', updateAuthNav);
+                    window.addEventListener('storage', updateAuthNav);
+                    // Fallback: run after a short delay in case nav is loaded dynamically
+                    setTimeout(updateAuthNav, 200);
+                    </script>
+            </div>
+            <!-- Authentication Modal -->
         </div>
     </div>
 </nav>
