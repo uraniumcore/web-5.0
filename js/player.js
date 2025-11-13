@@ -15,11 +15,28 @@ $(document).ready(function () {
 
     // This is the "database" of all tracks
     const defaultTracks = [
-        { id: 1, name: 'Want to', author: 'Playboi Carti', filename: 'wantto.m4a', duration: '2:31', cover: 'song_covers/prevail.jpg' },
-        { id: 2, name: 'Asthma/Goku', author: 'Playboi Carti', filename: 'asthma.m4a', duration: '2:10', cover: 'song_covers/prevail.jpg' },
-        { id: 3, name: 'Movie Time', author: 'Playboi Carti', filename: 'movietime.m4a', duration: '2:41', cover: 'song_covers/prevail.jpg' },
-        { id: 4, name: 'Friends', author: 'Playboi Carti', filename: 'friends.m4a', duration: '2:45', cover: 'song_covers/prevail.jpg' },
-        { id: 5, name: 'Stop Breathing', author: 'Playboi Carti', filename: 'stopbreathing.mp3', duration: '3:38', cover: 'song_covers/prevail.jpg' }
+        { id: 1, name: 'Asthma', author: 'Playboi Carti', filename: 'asthma.m4a', duration: '2:10', cover: 'song_covers/prevail.jpg' },
+        { id: 2, name: 'Backup', author: 'Playboi Carti', filename: 'backup.m4a', duration: '3:00', cover: 'song_covers/prevail.jpg' },
+        { id: 3, name: 'Break The Bank', author: 'Playboi Carti', filename: 'breakthebank.m4a', duration: '3:30', cover: 'song_covers/prevail.jpg' },
+        { id: 4, name: 'Butterfly Doors', author: 'Playboi Carti', filename: 'butterflydoors.m4a', duration: '2:45', cover: 'song_covers/prevail.jpg' },
+        { id: 5, name: 'Did It Again', author: 'Playboi Carti', filename: 'diditagain.m4a', duration: '3:35', cover: 'song_covers/prevail.jpg' },
+        { id: 6, name: 'Fashion Killer', author: 'Playboi Carti', filename: 'fashionkiller.m4a', duration: '2:30', cover: 'song_covers/prevail.jpg' },
+        { id: 7, name: 'Friends', author: 'Playboi Carti', filename: 'friends.m4a', duration: '2:45', cover: 'song_covers/prevail.jpg' },
+        { id: 8, name: 'Money And Drugs', author: 'Playboi Carti', filename: 'moneyanddrugs.m4a', duration: '2:29', cover: 'song_covers/prevail.jpg' },
+        { id: 9, name: 'Movie Time', author: 'Playboi Carti', filename: 'movietime.m4a', duration: '2:41', cover: 'song_covers/prevail.jpg' },
+        { id: 10, name: 'Nine Nine', author: 'Playboi Carti', filename: 'ninenine.m4a', duration: '2:25', cover: 'song_covers/prevail.jpg' },
+        { id: 11, name: 'Not Real', author: 'Playboi Carti', filename: 'notreal.m4a', duration: '2:23', cover: 'song_covers/prevail.jpg' },
+        { id: 12, name: 'Pissy Pamper', author: 'Playboi Carti', filename: 'pissypamper.mp3', duration: '3:21', cover: 'song_covers/prevail.jpg' },
+        { id: 13, name: 'Pop Bottles', author: 'Playboi Carti', filename: 'popbottles.m4a', duration: '2:00', cover: 'song_covers/prevail.jpg' },
+        { id: 14, name: 'Rip Yams', author: 'Playboi Carti', filename: 'ripyams.m4a', duration: '3:55', cover: 'song_covers/prevail.jpg' },
+        { id: 15, name: 'Red On Red', author: 'Playboi Carti', filename: 'redonred.m4a', duration: '3:05', cover: 'song_covers/prevail.jpg' },
+        { id: 16, name: 'Skeleton', author: 'Playboi Carti', filename: 'skeleton.m4a', duration: '3:05', cover: 'song_covers/prevail.jpg' },
+        { id: 17, name: 'Taking My Swag', author: 'Playboi Carti', filename: 'takingmyswag.m4a', duration: '3:50', cover: 'song_covers/prevail.jpg' },
+        { id: 18, name: 'Throw It Up', author: 'Playboi Carti', filename: 'throwitup.m4a', duration: '2:31', cover: 'song_covers/prevail.jpg' },
+        { id: 19, name: 'U Kan Get It Too', author: 'Playboi Carti', filename: 'ukangetittoo.m4a', duration: '3:50', cover: 'song_covers/prevail.jpg' },
+        { id: 20, name: 'Want To', author: 'Playboi Carti', filename: 'wantto.m4a', duration: '2:31', cover: 'song_covers/prevail.jpg' },
+        { id: 21, name: 'We So Proud Of Him', author: 'Playboi Carti', filename: 'wesoproudofhim.m4a', duration: '2:28', cover: 'song_covers/prevail.jpg' },
+        { id: 22, name: 'Whole Lotta Red', author: 'Playboi Carti', filename: 'wholelottared.m4a', duration: '2:15', cover: 'song_covers/prevail.jpg' }
     ];
 
     // Load queue from localStorage (array of ids) or use all tracks
